@@ -47,13 +47,13 @@ int main() {
 
                 clock_t start_time_rs, end_time_rs;
                 start_time_rs = clock();
-                radix_sort(array, n, k);
+                radix_sort(array, ARRAY_SIZE, k);
                 end_time_rs = clock();
                 double cpu_time_used_rs = ((double) (end_time_rs - start_time_rs)) / CLOCKS_PER_SEC;
 
                 clock_t start_time_qs, end_time_qs;
                 start_time_qs = clock();
-                quicksort(array, n);
+                quicksort(array, ARRAY_SIZE);
                 end_time_qs = clock();
                 double cpu_time_used_qs = ((double) (end_time_qs - start_time_qs)) / CLOCKS_PER_SEC;
 
