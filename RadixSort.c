@@ -10,15 +10,16 @@ typedef struct ParPunteroYBits {
 } ParPunteroYBits;
 
 int RadixSort(int* aOrdenar, int u, int k){
-    int Mask = 0;
-    int Mask2 = 0; 
+    int Mask = 0; // ej k= 4
+    Mask = ~Mask; // 1111111111111111111111111111111
+    Mask << k; //11111111111111111111111110000 (k 0's)
+    Mask = ~Mask; // 0000000000000000000000001111 (k 1's)
     int TamañoArray = sizeof(aOrdenar)/sizeof(int);
     ParPunteroYBits** ArrayOrdenador = (int**)malloc(sizeof(ParPunteroYBits*)*TamañoArray);
     int* ArrayOrdenador2 = malloc(sizeof(aOrdenar)*TamañoArray);
-    int NumIteraciones = sizeof(int)*8;
+    int BitsPorRecorrer = sizeof(int)*8;
     int BitsRecorridos = k;
-    Mask << k;
-    while(NumIteraciones > k){ 
+    while(BitsPorRecorrer > k){
         for(int i = 0; i < TamañoArray; i++){ // Me preocupa si se guarda bien
             ParPunteroYBits* j;
             j -> ptr = i;
@@ -29,12 +30,13 @@ int RadixSort(int* aOrdenar, int u, int k){
         for(int j = 0 ;j < TamañoArray ;j++ ){
             ArrayOrdenador2[j] = aOrdenar[ArrayOrdenador[j]->ptr];
         } 
-        Mask = ~Mask;
+        // Mask:  00000000000000000000000000000 1111
+        Mask << k; // 0000000000000000000000000 1111 0000
         BitsRecorridos+=k;
-        Mask2 << BitsRecorridos;
-        Mask = Mask&&Mask2;
-        NumIteraciones-= k;
+        BitsPorRecorrer-= k;
     }
+    //Mask = -2147483648;
+    
 
 
 
