@@ -5,7 +5,7 @@
 typedef struct ParPunteroYBits {
     int ptr;
     unsigned long long bits;
-} ParPunteroYBits;
+}ParPunteroYBits;
 typedef struct LinkedList {
     int ptr;
     LinkedList* next;

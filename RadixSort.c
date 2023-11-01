@@ -1,13 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "CountingSort.c"
 #include "BucketSort.c"
-
-typedef struct ParPunteroYBits {
-    int ptr;
-    unsigned long long bits;
-} ParPunteroYBits;
 
 unsigned long long* RadixSort(int* aOrdenar, int u, int k, int TamañoArray){
     int Mask = 0; // ej k= 4
