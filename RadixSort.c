@@ -9,12 +9,12 @@ typedef struct ParPunteroYBits {
     unsigned long long bits;
 } ParPunteroYBits;
 
-unsigned long long* RadixSort(int* aOrdenar, int u, int k){
+unsigned long long* RadixSort(int* aOrdenar, int u, int k, int TamañoArray){
     int Mask = 0; // ej k= 4
     Mask = ~Mask; // 1111111111111111111111111111111
     Mask << k; //11111111111111111111111110000 (k 0's)
     Mask = ~Mask; // 0000000000000000000000001111 (k 1's)
-    int TamañoArray = sizeof(aOrdenar)/sizeof(int); // Tamaño array puede que sea necesario declararlo desde antes
+    //int TamañoArray = sizeof(aOrdenar)/sizeof(int); // Tamaño array puede que sea necesario declararlo desde antes
     ParPunteroYBits** ArrayOrdenador = (int**)malloc(sizeof(ParPunteroYBits*)*TamañoArray);
     int* ArrayOrdenador2 = malloc(sizeof(int)*TamañoArray);
     int* ArrayOrdenador3 = malloc(sizeof(int)*TamañoArray);
@@ -27,7 +27,7 @@ unsigned long long* RadixSort(int* aOrdenar, int u, int k){
             j -> bits = aOrdenar[i]&&Mask;
             ArrayOrdenador[i] = j;
         }
-        ArrayOrdenador2 = BucketSort(ArrayOrdenador,k);
+        ArrayOrdenador2 = BucketSort(ArrayOrdenador,k, TamañoArray);
         for(int j = 0 ;j < TamañoArray ;j++ ){
             ArrayOrdenador3[j] = aOrdenar[ArrayOrdenador2[j]];
         } 
@@ -46,7 +46,7 @@ unsigned long long* RadixSort(int* aOrdenar, int u, int k){
         j -> bits = aOrdenar[i]&&Mask;
         ArrayOrdenador[i] = j;
     }
-    ArrayOrdenador = BucketSort(ArrayOrdenador,BitsPorRecorrer);
+    ArrayOrdenador = BucketSort(ArrayOrdenador,BitsPorRecorrer,TamañoArray);
     for(int j = 0 ;j < TamañoArray ;j++ ){
         ArrayOrdenador3[j] = aOrdenar[ArrayOrdenador2[j]];
     }

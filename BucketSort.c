@@ -13,7 +13,7 @@ typedef struct LinkedList {
 
 
 // Este BucketSort será utilizado para ordenar arrays de ParPunteroYBits los cuales tienen k bits guardados
-int* BucketSort( ParPunteroYBits** aOrdenar, int k ){ // u Ahora es el numero de bits que tiene el  campo bits del arreglo aOrdenar
+int* BucketSort( ParPunteroYBits** aOrdenar, int k, int TamañoArray ){ // u Ahora es el numero de bits que tiene el  campo bits del arreglo aOrdenar
     int NumMaximo = 0;
     for(int a = k-1; a >-1; a--){ // La idea es que NumMaximo guarde 2^k + 2^(k-1) + ... + 2^1 + 2^0
         NumMaximo+= pow(2,a);      // Ej : k = 4 bits -> 2^3 + 2^2 + 2^1 + 2^0 = 8+4+2+1 = 15
@@ -29,7 +29,7 @@ int* BucketSort( ParPunteroYBits** aOrdenar, int k ){ // u Ahora es el numero de
     }
 
     // Tamaño array aOrdenar
-    int TamañoArray = sizeof(aOrdenar)/sizeof(ParPunteroYBits);
+    //int TamañoArray = sizeof(aOrdenar)/sizeof(ParPunteroYBits);
 
     // Recorremos aOrdenar y ponemos los ptr que almacenan sus elementos en su LinkedList correspondiente
     for(int k = 0; k < TamañoArray;k++){
