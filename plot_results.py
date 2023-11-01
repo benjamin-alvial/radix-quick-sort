@@ -42,6 +42,8 @@ print(exp2_df)
 # Plotting
 plt.figure(figsize=(10, 6))
 
+plt.xscale('log', base=2)
+
 # Plot the first column as a function of the third column
 plt.plot(exp2_df['u'], exp2_df['avg_cpu_rs'], label='radix sort')
 
