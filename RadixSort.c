@@ -12,7 +12,6 @@ unsigned long long* RadixSort(unsigned long long* aOrdenar, int u, int k, int Ta
     //Mask = ~Mask; // 0000000000000000000000001111 (k 1's)
     //int TamañoArray = sizeof(aOrdenar)/sizeof(int); // Tamaño array puede que sea necesario declararlo desde antes
     unsigned long long Mask = (1ULL << k) - 1;
-    printf("-----------------------------Mask:%d-------------------------------\n",Mask);
     ParPunteroYBits* ArrayOrdenador = (ParPunteroYBits*)malloc(sizeof(ParPunteroYBits*)*TamañoArray);
     unsigned long long* ArrayOrdenador2 = malloc(sizeof(unsigned long long)*TamañoArray);
     unsigned long long* ArrayOrdenador3 = malloc(sizeof(unsigned long long)*TamañoArray);
@@ -21,14 +20,14 @@ unsigned long long* RadixSort(unsigned long long* aOrdenar, int u, int k, int Ta
     while(BitsPorRecorrer > k){
         for(int i = 0; i < TamañoArray; i++){ // Me preocupa si se guarda bien
             //ParPunteroYBits* j;
-            ParPunteroYBits PPYB= {i,aOrdenar[i]&&Mask}; ///10&&01 ---> 00
+            ParPunteroYBits PPYB= {i,aOrdenar[i]&Mask}; ///10&01 ---> 00
             //j = &PPYB;
-            printf("------------------i:%d///aOrdenar:%d///bits:%d/// MASK:%d  -------------------\n",i,aOrdenar[i],aOrdenar[i]&&Mask,Mask);
+            printf("------------------i:%d///aOrdenar:%d///bits:%d/// MASK:%d  -------------------\n",i,aOrdenar[i],aOrdenar[i]&Mask,Mask);
             //j -> ptr = i;
-            //j -> bits = aOrdenar[i]&&Mask;
+            //j -> bits = aOrdenar[i]&Mask;
             ArrayOrdenador[i] = PPYB;
         }
-        printf("------------------PUNTO CHINGON-------------------\n");
+
         ArrayOrdenador2 = BucketSort(ArrayOrdenador,k, TamañoArray); //  
         for(int a = 0; a < TamañoArray;a++){
             printf("ArrayOrdenador2[%d]: %d\n",a,ArrayOrdenador2[a]);
@@ -37,9 +36,13 @@ unsigned long long* RadixSort(unsigned long long* aOrdenar, int u, int k, int Ta
         for(int ptr = 0 ;ptr < TamañoArray ;ptr++ ){
             ArrayOrdenador3[ptr] = aOrdenar[ArrayOrdenador2[ptr]]; // ArrayOrdenador2 = {5 ,8 ,9] --> ArrayOrdenador3 = {aOrdenar[5], aOrdenar[8], aOrdenar[9]}
         }
-
+        aOrdenar = ArrayOrdenador3;
+        for(int a = 0; a <TamañoArray;a++){
+          printf("aOrdenar[%d] = %d\n",a,aOrdenar[a]);
+        }
         // Mask:  00000000000000000000000000000 1111
-        Mask << k; // 0000000000000000000000000 1111 0000
+        Mask = Mask << k; // 0000000000000000000000000 1111 0000
+        printf("--------------------MASK: %d-----------------------\n", Mask);
         BitsRecorridos+=k;
         BitsPorRecorrer-= k;
         printf("------------------Bits por recorrer: %d--------------------\n",BitsPorRecorrer);
@@ -53,7 +56,7 @@ unsigned long long* RadixSort(unsigned long long* aOrdenar, int u, int k, int Ta
     for(int i = 0; i < TamañoArray; i++){ // Me preocupa si se guarda bien
         ParPunteroYBits j;
         j.ptr = i;
-        j.bits = aOrdenar[i]&&Mask;
+        j.bits = aOrdenar[i]&Mask;
         ArrayOrdenador[i] = j;
     }
     ArrayOrdenador2 = BucketSort(ArrayOrdenador,BitsPorRecorrer,TamañoArray);
