@@ -20,7 +20,7 @@
 
 // Number of elements in the arrays
 //#define ARRAY_SIZE 100000000
-#define ARRAY_SIZE 1000
+#define ARRAY_SIZE 10
 
 
 unsigned long long generate_random_number(unsigned long long x) {
@@ -74,13 +74,16 @@ int main() {
                 unsigned long long *array = (unsigned long long *)malloc(ARRAY_SIZE * sizeof(unsigned long long));
                 for (int j = 0; j < ARRAY_SIZE; ++j) {
                     // Generate an array of random numbers between 1 and u
-                    //array[i] = ((unsigned long long)rand() % u) + 1;
-                    array[i] = generate_random_number(u);
+                    array[j] = ((unsigned long long)rand() % u) + 1;
+                    //array[j] = generate_random_number(u);
                 }
 
                 printf("- Sorting with radix sort...\n");
                 clock_t start_time_rs, end_time_rs;
                 start_time_rs = clock();
+                //for(int a = 0; a < ARRAY_SIZE;a++){
+                //    printf("%d\n",array[a]);
+                //}
                 RadixSort(array,u,k,ARRAY_SIZE);
                 printf("------------------EL RADIX CORRIÓ--------------------\n");
                 end_time_rs = clock();
