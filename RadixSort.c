@@ -16,11 +16,13 @@ unsigned long long* RadixSort(unsigned long long* aOrdenar, int u, int k, int Ta
     unsigned long long* ArrayOrdenador2 = malloc(sizeof(unsigned long long)*TamañoArray);
     unsigned long long* ArrayOrdenador3 = malloc(sizeof(unsigned long long)*TamañoArray);
     int BitsPorRecorrer = sizeof(unsigned long long)*8;
-    int BitsRecorridos = k;
+    int BitsRecorridos = 0;
     while(BitsPorRecorrer > k){
         for(int i = 0; i < TamañoArray; i++){ // Me preocupa si se guarda bien
             //ParPunteroYBits* j;
-            ParPunteroYBits PPYB= {i,aOrdenar[i]&Mask}; ///10&01 ---> 00
+            unsigned long long bit = aOrdenar[i]&Mask;
+            bit = bit >> BitsRecorridos;
+            ParPunteroYBits PPYB= {i,bit}; ///10&01 ---> 00
             //j = &PPYB;
             printf("------------------i:%d///aOrdenar:%d///bits:%d/// MASK:%d  -------------------\n",i,aOrdenar[i],aOrdenar[i]&Mask,Mask);
             //j -> ptr = i;
@@ -36,7 +38,9 @@ unsigned long long* RadixSort(unsigned long long* aOrdenar, int u, int k, int Ta
         for(int ptr = 0 ;ptr < TamañoArray ;ptr++ ){
             ArrayOrdenador3[ptr] = aOrdenar[ArrayOrdenador2[ptr]]; // ArrayOrdenador2 = {5 ,8 ,9] --> ArrayOrdenador3 = {aOrdenar[5], aOrdenar[8], aOrdenar[9]}
         }
-        aOrdenar = ArrayOrdenador3;
+        for(int ptr = 0; ptr< TamañoArray; ptr++){
+            aOrdenar[ptr] = ArrayOrdenador3[ptr];
+        }
         for(int a = 0; a <TamañoArray;a++){
           printf("aOrdenar[%d] = %d\n",a,aOrdenar[a]);
         }
@@ -46,8 +50,11 @@ unsigned long long* RadixSort(unsigned long long* aOrdenar, int u, int k, int Ta
         BitsRecorridos+=k;
         BitsPorRecorrer-= k;
         printf("------------------Bits por recorrer: %d--------------------\n",BitsPorRecorrer);
-
+        free(ArrayOrdenador2);
+        free(ArrayOrdenador3);
     }
+    ArrayOrdenador2 = malloc(sizeof(unsigned long long)*TamañoArray);
+    ArrayOrdenador3 = malloc(sizeof(unsigned long long)*TamañoArray);
     printf("------------------PUNTO DE CONTROL 2--------------------\n");
     Mask = 0;
     Mask = ~Mask; // 11111111111111111111111111111
@@ -63,6 +70,9 @@ unsigned long long* RadixSort(unsigned long long* aOrdenar, int u, int k, int Ta
     for(int j = 0 ;j < TamañoArray ;j++ ){
         ArrayOrdenador3[j] = aOrdenar[ArrayOrdenador2[j]];
     }
+    free(ArrayOrdenador3);
+    free(ArrayOrdenador2);
+    free(ArrayOrdenador);
     return ArrayOrdenador3; 
 
 
