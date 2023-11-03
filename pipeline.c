@@ -1,8 +1,10 @@
-#include "quicksort.c"
-//#include "RadixSort.c"
 #include <time.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
+
+//#include "quicksort.c"
+#include "RadixSort.c"
 
 // Values for universe u
 // follow powers of 2 from U_POW_INITIAL to U_POW_FINAL
@@ -18,7 +20,7 @@
 
 // Number of elements in the arrays
 //#define ARRAY_SIZE 100000000
-#define ARRAY_SIZE 1000000
+#define ARRAY_SIZE 1000
 
 
 unsigned long long generate_random_number(unsigned long long x) {
@@ -43,7 +45,7 @@ int main() {
     int u_values_size = U_POW_FINAL-U_POW_INITIAL+1;
     unsigned long long u_values[u_values_size];
     for(int i=0; i<u_values_size; i++) {
-        u_values[i] = pow(2, i+U_POW_INITIAL);
+        u_values[i] =   (2, i+U_POW_INITIAL);
         printf("Power of 2 created: 2^%d= %llu\n", i+U_POW_INITIAL, u_values[i]);
     }
 
@@ -76,25 +78,26 @@ int main() {
                     array[i] = generate_random_number(u);
                 }
 
-                //printf("- Sorting with radix sort...\n");
-                //clock_t start_time_rs, end_time_rs;
-                //start_time_rs = clock();
-                //RadixSort(array, ARRAY_SIZE, k);
-                //end_time_rs = clock();
-                //cpu_time_used_rs = ((double) (end_time_rs - start_time_rs)) / CLOCKS_PER_SEC;
+                printf("- Sorting with radix sort...\n");
+                clock_t start_time_rs, end_time_rs;
+                start_time_rs = clock();
+                RadixSort(array,u,k,ARRAY_SIZE);
+                printf("------------------EL RADIX CORRIÓ--------------------\n");
+                end_time_rs = clock();
+                cpu_time_used_rs = ((double) (end_time_rs - start_time_rs)) / CLOCKS_PER_SEC;
 
-                if(quick_rep < NUMBER_REPS) {
-                    printf("- Sorting with quicksort...\n");
-                    clock_t start_time_qs, end_time_qs;
-                    start_time_qs = clock();
-                    quicksort(array, 0, ARRAY_SIZE-1);
-                    end_time_qs = clock();
-                    cpu_time_used_qs = ((double) (end_time_qs - start_time_qs)) / CLOCKS_PER_SEC;
-                    quick_rep++; 
-                }
+                //if(quick_rep < NUMBER_REPS) {
+                //    printf("- Sorting with quicksort...\n");
+                //    clock_t start_time_qs, end_time_qs;
+                //    start_time_qs = clock();
+                //    quicksort(array, 0, ARRAY_SIZE-1);
+                //    end_time_qs = clock();
+                //    cpu_time_used_qs = ((double) (end_time_qs - start_time_qs)) / CLOCKS_PER_SEC;
+                //    quick_rep++; 
+                //}
             
                 //fprintf(results_file, "%d, %d, %d, %lf, %d, %lf, %lf\n", u, k, rep, cpu_time_used_rs, cpu_time_used_qs);
-                fprintf(results_file, "%llu, %d, %d, %lf, %lf\n", u, k, rep, cpu_time_used_qs, cpu_time_used_qs);
+                fprintf(results_file, "%llu, %d, %d, %lf, %lf\n", u, k, rep, cpu_time_used_rs, cpu_time_used_rs);
                 free(array);
             }
 
