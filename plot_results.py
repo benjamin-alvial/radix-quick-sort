@@ -29,13 +29,36 @@ print(result_df)
 # ============ Experiment 1 ============
 # Analyzes effect of number of bits k and size of universe u
 # in the time taken by radix sort.
+print("============ Experiment 1 ============")
+exp1_df = result_df
+u_values_to_plot = [2**10, 2**30, 2**60]
 
-# WIP
+# Plotting
+plt.figure(figsize=(10, 6))
+
+for u in u_values_to_plot:
+    by_u_df = exp1_df[exp1_df['u']==u]
+    print(by_u_df)
+
+    # Plot the u column as a function of the radix sort time column
+    plt.plot(by_u_df['k'], by_u_df['avg_cpu_rs'], label='radix sort'+str(u))
+
+# Set labels and title
+plt.xlabel('k')
+plt.ylabel('radix sort time (s)')
+
+# Show legend
+plt.legend()
+
+plt.savefig('exp1.png')
+plt.show()
+plt.clf()
 
 # ============ Experiment 2 ============
 # Compares radix sort and quicksort as a function of u.
 # The best results for radix sort time should be considered,
 # considering multiple values of k and optimal k must be chosen.
+print("============ Experiment 2 ============")
 exp2_df = result_df.loc[result_df.groupby('u')['avg_cpu_rs'].idxmin()]
 print(exp2_df)
 
@@ -44,19 +67,19 @@ plt.figure(figsize=(10, 6))
 
 plt.xscale('log', base=2)
 
-# Plot the first column as a function of the third column
+# Plot the u column as a function of the radix sort time column
 plt.plot(exp2_df['u'], exp2_df['avg_cpu_rs'], label='radix sort')
 
-# Plot the second column as a function of the third column
+# Plot the u column as a function of the quicksort time column
 plt.plot(exp2_df['u'], exp2_df['avg_cpu_qs'], label='quicksort')
 
 # Set labels and title
 plt.xlabel('u')
 plt.ylabel('time (s)')
-#plt.title('Plotting y1 and y2 as a function of x')
 
 # Show legend
 plt.legend()
 
 # Show the plot
+plt.savefig('exp2.png')
 plt.show()
