@@ -11,7 +11,7 @@
 //#define U_POW_INITIAL 1
 //#define U_POW_FINAL 64
 #define U_POW_INITIAL 5
-#define U_POW_FINAL 20
+#define U_POW_FINAL 63
 
 // Amount of times the sort will be done to calculate
 // the average performance
@@ -47,6 +47,12 @@ int main() {
         // The index i+U_POW_INITIAL is exactly the value of log2(u)
         // since it's the exponent of the 2 in this iteration
         for(int k=1; k<i+U_POW_INITIAL+1; k++) {
+
+            // Counter arrays in radix's bucket sorts can't be too big.
+            // k=30 would mean a counter array for universe approx. [1..2^30]
+            if(k>30) {
+                continue; 
+            }
 
             printf("--------------------------------------------\n");
             printf("Sorting %d elements for u=2^%d=%llu, k=%d for %d repetitions...\n", ARRAY_SIZE, i+U_POW_INITIAL, u, k, NUMBER_REPS);
