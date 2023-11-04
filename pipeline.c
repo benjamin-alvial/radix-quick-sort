@@ -20,7 +20,7 @@
 
 // Number of elements in the arrays
 //#define ARRAY_SIZE 100000000
-#define ARRAY_SIZE 10000000
+#define ARRAY_SIZE 1000000
 
 int main() {
 
