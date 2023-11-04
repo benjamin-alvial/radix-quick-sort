@@ -36,13 +36,22 @@ unsigned long long* BucketSort( ParPunteroYBits* aOrdenar, int k, int TamañoArr
         printf("------------------CASILLA : %d-------------------\n",aOrdenar[k].bits);
         while(Objetivo->next != NULL){
             Objetivo = Objetivo->next;
+            printf("------------------Aqui no debería pasar---------------\n");
         }
         printf("------------------aOrdenar[k]->ptr: %d-------------------\n", (aOrdenar[k].ptr));
-        LinkedList* LL = (LinkedList*)malloc(sizeof(LinkedList));
-        LL->next = NULL;
-        LL->ptr = aOrdenar[k].ptr;
-        Objetivo->next = LL;
+        if(Objetivo->ptr == -1){
+            Objetivo->ptr = aOrdenar[k].ptr;
+            Objetivo->next = NULL;
+        }
+        else{
+            LinkedList* LL = (LinkedList*)malloc(sizeof(LinkedList));
+            LL->next = NULL;
+            LL->ptr = aOrdenar[k].ptr;
+            Objetivo->next = LL;
+        }
+        
     }
+    
     // Creamos un nuevo array para almacenar los elementos ordenados
     unsigned long long* NuevoArray = malloc(sizeof(int)*TamañoArray);
     int posActual = 0;
@@ -59,6 +68,7 @@ unsigned long long* BucketSort( ParPunteroYBits* aOrdenar, int k, int TamañoArr
         while(Actual->next != NULL){
             if(Actual->ptr != -1){
                 NuevoArray[posActual] = Actual->ptr;
+                printf("El puntero guardado es: %d\n",Actual->ptr);
                 posActual++;
             }
             Actual = Actual->next;
@@ -66,20 +76,21 @@ unsigned long long* BucketSort( ParPunteroYBits* aOrdenar, int k, int TamañoArr
         if(Actual->ptr != -1){
                 NuevoArray[posActual] = Actual->ptr;
                 posActual++;
-            }
+                printf("El puntero guardado es: %d\n",Actual->ptr);
+        }
     }
-    //Print para ver si ordena bien
-    //for(int a = 0; a <TamañoArray;a++){
-    //    printf("NuevoArray[%d] = %d\n",a,NuevoArray[a]);
-    //}
+
     for(int i = 0; i < NumMaximo+1;i++){
         while(ArrayContador[i]->next!= NULL){
+            printf("--------------------------PASA ESTO?5--------------------------\n");
             LinkedList* aBorrar = ArrayContador[i];
             LinkedList* PaBorrar;
+            printf("--------------------------Hay algo? ptr: %d /// next: %d ///--------------------------\n",ArrayContador[0]->ptr,ArrayContador[1]->ptr);
             while(aBorrar->next !=NULL){
                 PaBorrar = aBorrar;
                 aBorrar = aBorrar->next;
             }
+            printf("--------------------------PASA ESTO?6--------------------------\n");
             free(aBorrar);
             PaBorrar->next = NULL;
         }
