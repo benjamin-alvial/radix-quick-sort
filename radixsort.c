@@ -26,23 +26,23 @@ void bucketSortWithSatellite(
     // Temporal arrays to write the results.
     unsigned long long *result_array = (unsigned long long *)malloc(size * sizeof(unsigned long long));
     unsigned long long *result_satellite = (unsigned long long *)malloc(size * sizeof(unsigned long long));
-
+    // Create counter array.
+    int *C = (int *)malloc((u+1) * sizeof(int));
+    
     /*
     printf("\n-- array to be sorted --\n");
     for(int a = 0; a < size;a++){
         printf("%llu ",array_to_sort[a]);
     }
     */
-
+    
     /*
     printf("\n-- satellite array to be sorted --\n");
     for(int a = 0; a < size;a++){
-        //printf("%llu ",result_satellite[a]);
+        printf("%llu ",array_satellite[a]);
     }
     */
 
-    // Create counter array.
-    int C[u+1];
     for(unsigned long long j=0; j<u+1; j++) {
         C[j] = 0;
     }
@@ -50,7 +50,7 @@ void bucketSortWithSatellite(
     /*
     printf("\n-- counter array --\n");
     for(int a = 0; a < u+1;a++){
-        //printf("%d ",C[a]);
+        printf("%d ",C[a]);
     }
     */
 
@@ -62,7 +62,7 @@ void bucketSortWithSatellite(
     /*
     //printf("\n-- increased counter array --\n");
     for(int a = 0; a < u+1;a++){
-        //printf("%d ",C[a]);
+        printf("%d ",C[a]);
     }
     */
 
@@ -74,7 +74,7 @@ void bucketSortWithSatellite(
     /*
     //printf("\n-- counter array changed --\n");
     for(int a = 0; a < u+1;a++){
-        //printf("%d ",C[a]);
+        printf("%d ",C[a]);
     }
     */
 
@@ -94,6 +94,7 @@ void bucketSortWithSatellite(
     // Free temporal arrays.
     free(result_array);
     free(result_satellite);
+    free(C);
 }
 
 // Does a radix sort as a series of bucket sorts by bits,
