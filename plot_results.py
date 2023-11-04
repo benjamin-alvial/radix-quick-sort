@@ -5,13 +5,15 @@ file_path = 'performance_results.txt'
 column_names = ['u', 'k', 'rep', 'cpu_rs', 'cpu_qs']
 
 # Specify the chunk size
-NUMBER_REPS = 100
+NUMBER_REPS = 1
 
 # Create an empty DataFrame to store the results
 result_df = pd.DataFrame(columns=['chunk', 'u', 'k', 'avg_cpu_rs', 'avg_cpu_qs'])
 
 # Iterate through chunks of the CSV file
-for chunk_number, chunk_df in enumerate(pd.read_csv(file_path, names=column_names, chunksize=NUMBER_REPS)):
+for chunk_number, chunk_df in enumerate(pd.read_csv(file_path, names=column_names, delimiter=',', chunksize=NUMBER_REPS)):
+    chunk_df = chunk_df.reset_index(drop=True)
+
     # Calculate the average for the fourth and fifth columns
     u = chunk_df['u'][0]
     k = chunk_df['k'][0]
@@ -19,7 +21,7 @@ for chunk_number, chunk_df in enumerate(pd.read_csv(file_path, names=column_name
     avg_cpu_qs = chunk_df['cpu_qs'].mean()
 
     # Append the results to the result DataFrame
-    result_df = result_df.append({'chunk': chunk_number + 1, 'u': u, 'k': k, 'avg_cpu_rs': avg_cpu_rs, 'avg_cpu_qs': avg_cpu_qs}, ignore_index=True)
+    result_df = result_df._append({'chunk': chunk_number + 1, 'u': u, 'k': k, 'avg_cpu_rs': avg_cpu_rs, 'avg_cpu_qs': avg_cpu_qs}, ignore_index=True)
 
 # Display the result DataFrame
 print(result_df)
@@ -39,6 +41,8 @@ print(exp2_df)
 
 # Plotting
 plt.figure(figsize=(10, 6))
+
+plt.xscale('log', base=2)
 
 # Plot the first column as a function of the third column
 plt.plot(exp2_df['u'], exp2_df['avg_cpu_rs'], label='radix sort')
