@@ -10,8 +10,8 @@
 // follow powers of 2 from U_POW_INITIAL to U_POW_FINAL
 //#define U_POW_INITIAL 1
 //#define U_POW_FINAL 64
-#define U_POW_INITIAL 5
-#define U_POW_FINAL 63
+#define U_POW_INITIAL 10
+#define U_POW_FINAL 60
 
 // Amount of times the sort will be done to calculate
 // the average performance
@@ -20,7 +20,7 @@
 
 // Number of elements in the arrays
 //#define ARRAY_SIZE 100000000
-#define ARRAY_SIZE 1000000
+#define ARRAY_SIZE 10000000
 
 int main() {
 
@@ -50,7 +50,7 @@ int main() {
 
             // Counter arrays in radix's bucket sorts can't be too big.
             // k=30 would mean a counter array for universe approx. [1..2^30]
-            if(k>30) {
+            if(k>26) {
                 continue; 
             }
 
@@ -66,7 +66,11 @@ int main() {
                 unsigned long long *array = (unsigned long long *)malloc(ARRAY_SIZE * sizeof(unsigned long long));
                 for (int j = 0; j < ARRAY_SIZE; ++j) {
                     // Generate an array of random numbers between 1 and u
-                    array[j] = ((unsigned long long)rand() % u) + 1;
+                    // Multiplication of two values from a uniform distribution may not follor another uniform distribution, 
+                    // but this works for this project.
+                    unsigned long long rand1 = ((unsigned long long)rand() % u) + 1;
+                    unsigned long long rand2 = ((unsigned long long)rand() % u) + 1;
+                    array[j] = rand1 * rand2;
                 }
 
                 printf("- Sorting with radix sort...\n");
