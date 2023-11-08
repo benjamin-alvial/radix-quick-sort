@@ -31,7 +31,7 @@ print(result_df)
 # in the time taken by radix sort.
 print("============ Experiment 1 ============")
 exp1_df = result_df
-u_values_to_plot = [2**10, 2**30, 2**60]
+u_values_to_plot = [2**10, 2**20, 2**30, 2**40, 2**50, 2**60]
 
 # Plotting
 plt.figure(figsize=(10, 6))
@@ -52,7 +52,6 @@ plt.legend()
 
 plt.savefig('exp1.png')
 plt.show()
-plt.clf()
 
 # ============ Experiment 2 ============
 # Compares radix sort and quicksort as a function of u.
