@@ -1,11 +1,12 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import math
 
 file_path = 'performance_results.txt'
 column_names = ['u', 'k', 'rep', 'cpu_rs', 'cpu_qs']
 
 # Specify the chunk size
-NUMBER_REPS = 1
+NUMBER_REPS = 5
 
 # Create an empty DataFrame to store the results
 result_df = pd.DataFrame(columns=['chunk', 'u', 'k', 'avg_cpu_rs', 'avg_cpu_qs'])
@@ -37,11 +38,14 @@ u_values_to_plot = [2**10, 2**20, 2**30, 2**40, 2**50, 2**60]
 plt.figure(figsize=(10, 6))
 
 for u in u_values_to_plot:
-    by_u_df = exp1_df[exp1_df['u']==u]
+    by_u_df = exp1_df[exp1_df['u'] == u]
     print(by_u_df)
 
+    # Calculate the power of 2 for the label
+    power_of_2 = int(math.log2(u))
+
     # Plot the u column as a function of the radix sort time column
-    plt.plot(by_u_df['k'], by_u_df['avg_cpu_rs'], label='radix sort'+str(u))
+    plt.plot(by_u_df['k'], by_u_df['avg_cpu_rs'], label=f'radix sort $2^{{{power_of_2}}}$')
 
 # Set labels and title
 plt.xlabel('k')
